@@ -2,38 +2,15 @@ package components
 
 import (
 	"os"
+	"prometheus-transporter/model"
 
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 )
 
-type Logger struct {
-	baseLogger  log.Logger
-	debugLogger log.Logger
-	infoLogger  log.Logger
-	warnLogger  log.Logger
-	errorLogger log.Logger
-}
+var logger *model.Logger
 
-func (l Logger) Debug(keyvalues ...interface{}) {
-	l.debugLogger.Log(keyvalues...)
-}
-
-func (l Logger) Info(keyvalues ...interface{}) {
-	l.infoLogger.Log(keyvalues...)
-}
-
-func (l Logger) Warn(keyvalues ...interface{}) {
-	l.warnLogger.Log(keyvalues...)
-}
-
-func (l Logger) Error(keyvalues ...interface{}) {
-	l.errorLogger.Log(keyvalues...)
-}
-
-var logger *Logger
-
-func InitLogger(conf LogConfig) {
+func InitLogger(conf model.LogConfig) {
 	var baseLogger log.Logger
 
 	{
@@ -60,15 +37,9 @@ func InitLogger(conf LogConfig) {
 		baseLogger = log.With(baseLogger, "ts", log.DefaultTimestampUTC, "caller", log.DefaultCaller)
 	}
 
-	logger = &Logger{
-		baseLogger:  baseLogger,
-		debugLogger: level.Debug(baseLogger),
-		infoLogger:  level.Info(baseLogger),
-		warnLogger:  level.Warn(baseLogger),
-		errorLogger: level.Error(baseLogger),
-	}
+	logger = model.NewLogger(baseLogger)
 }
 
-func GetLogger() *Logger {
+func GetLogger() *model.Logger {
 	return logger
 }

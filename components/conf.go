@@ -3,31 +3,19 @@ package components
 import (
 	"bytes"
 	"fmt"
-	"sync"
+	"prometheus-transporter/model"
 
 	"github.com/spf13/viper"
 	"github.com/toolkits/pkg/file"
 )
 
-type LogConfig struct {
-	Level  string `yaml:"level"`
-	Format string `yaml:"format"`
-}
-
-type ConfToml struct {
-	HTTPPort  int       `toml:"httpPort"`
-	Transfers []string  `toml:"transfers"`
-	Logger    LogConfig `toml:"logger"`
-}
-
 var (
-	config   *ConfToml
-	lock     = new(sync.RWMutex)
+	config   *model.Config
 	Endpoint string
 	Cwd      string
 )
 
-func GetConfig() *ConfToml {
+func GetConfig() *model.Config {
 	return config
 }
 
@@ -36,9 +24,6 @@ func ParseConfig(conf string) error {
 	if err != nil {
 		return fmt.Errorf("cannot read yml[%s]: %v", conf, err)
 	}
-
-	lock.Lock()
-	defer lock.Unlock()
 
 	viper.SetConfigType("toml")
 	err = viper.ReadConfig(bytes.NewBuffer(bs))

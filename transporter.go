@@ -1,10 +1,13 @@
 package main
 
 import (
-	"transporter/components"
+	"prometheus-transporter/components"
+	"prometheus-transporter/receiver"
 )
 
 func main() {
-	components.InitAll()
+	components.InitComponents()
 	logger := components.GetLogger()
+	conf := components.GetConfig()
+	receiver.Start(logger, conf)
 }
