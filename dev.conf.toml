@@ -1,0 +1,11 @@
+httpPort = 12345
+
+transfers = [
+  "127.0.0.1:5821",
+]
+
+[logger]
+    level = "info"
+    format = "json"
+
+

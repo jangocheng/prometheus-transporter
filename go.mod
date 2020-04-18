@@ -1,9 +1,10 @@
-module main
+module transporter
 
 go 1.14
 
 require (
-	github.com/labstack/echo v3.3.10+incompatible // indirect
-	github.com/labstack/gommon v0.3.0 // indirect
-	golang.org/x/crypto v0.0.0-20200320181102-891825fb96df // indirect
+	github.com/go-kit/kit v0.10.0
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/spf13/viper v1.6.2
+	github.com/toolkits/pkg v1.1.1
 )
