@@ -5,7 +5,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"os"
+	"time"
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/golang/snappy"
@@ -14,7 +14,7 @@ import (
 	"prometheus-transporter/model"
 )
 
-func Start(logger *model.Logger, conf *model.Config) {
+func Start(logger *model.Logger, conf *model.Config) http.Server {
 	http.HandleFunc("/-/healthy", func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "ok")
 		return
@@ -64,17 +64,27 @@ func Start(logger *model.Logger, conf *model.Config) {
 		}
 	})
 
-	logger.Info(
-		"module", "receiver",
-		"msg", fmt.Sprintf("starting http server, listening on:%s", conf.HTTP),
-	)
-	if err := http.ListenAndServe(conf.HTTP, nil); err != nil && err != http.ErrServerClosed {
-		logger.Error(
-			"module", "receiver",
-			"msg", fmt.Errorf("listening http port failed. %w", err),
-		)
-		os.Exit(1)
+	s := &http.Server{
+		Addr:           conf.HTTP,
+		Handler:        http.DefaultServeMux,
+		ReadTimeout:    5 * time.Second,
+		WriteTimeout:   5 * time.Second,
+		MaxHeaderBytes: 1 << 20,
 	}
+
+	go func() {
+		logger.Info(
+			"module", "receiver",
+			"msg", fmt.Sprintf("starting http server, listening on:%s", conf.HTTP),
+		)
+		s.ListenAndServe()
+		logger.Info(
+			"module", "receiver",
+			"msg", fmt.Sprintf("http server shutting down"),
+		)
+	}()
+
+	return s
 }
 
 func handle() {}
