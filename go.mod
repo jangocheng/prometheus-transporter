@@ -7,9 +7,10 @@ require (
 	github.com/go-kit/kit v0.10.0
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/snappy v0.0.1
+	github.com/json-iterator/go v1.1.9
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
-	github.com/niean/gotools v0.0.0-20151221085310-ff3f51fc5c60 // indirect
-	github.com/parnurzeal/gorequest v0.2.16 // indirect
+	github.com/niean/gotools v0.0.0-20151221085310-ff3f51fc5c60
+	github.com/parnurzeal/gorequest v0.2.16
 	github.com/prometheus/common v0.7.0
 	github.com/prometheus/prometheus v2.5.0+incompatible
 	github.com/spf13/viper v1.6.3

@@ -1,1 +1,4 @@
-package data_migration
+package main
+
+func main() {
+}
