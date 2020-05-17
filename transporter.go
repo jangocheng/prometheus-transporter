@@ -34,7 +34,7 @@ func main() {
 		"msg", "get system signal...",
 		"signal", <-ch)
 
-	// gracefully shutdown
+	// shutdown gracefully
 	recv.Shutdown(nil)
 	timeout := 60 * time.Second
 	for {

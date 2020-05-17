@@ -8,4 +8,11 @@ transfers = [
     level = "info"
     format = "json"
 
+[sender]
+    type =  "n9e"
+	concurrency = 20
+	maxSamplePerBatch = 2000
+	retryNum = 3
+	timeout = 5
+
 

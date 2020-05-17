@@ -13,10 +13,19 @@ type LogConfig struct {
 	Format string `yaml:"format"`
 }
 
+type SenderConfig struct {
+	Type              string `yaml:"n9e"`
+	Concurrency       int    `yaml:"concurrency"`
+	MaxSamplePerBatch int    `yaml:"maxSamplePerBatch"`
+	RetryNumber       int    `yaml:"retryNum"`
+	Timeout           int    `yaml:"timeout"`
+}
+
 type Config struct {
-	HTTP      string    `toml:"http"`
-	Transfers []string  `toml:"transfers"`
-	Logger    LogConfig `toml:"logger"`
+	HTTP      string       `yaml:"http"`
+	Transfers []string     `yaml:"transfers"`
+	Logger    LogConfig    `yaml:"logger"`
+	Sender    SenderConfig `yaml:"sender"`
 }
 
 /*
